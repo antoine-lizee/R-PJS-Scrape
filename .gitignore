@@ -8,5 +8,6 @@
 
 .DS_Store
 
-.sqlite
-.log
+*.sqlite
+*.log
+test.*
