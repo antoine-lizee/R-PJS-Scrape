@@ -26,6 +26,7 @@ fullUrl <- paste(baseURL, destinations, goDates, returnDates, sep = "/")
 suppressMessages({
   library("XML")
   library("RSQLite")
+  library("reshape2")
 })
 
 cat("# KAYAK scraping script run as", system("whoami", intern = T), "on", format(t0 <- Sys.time()) ,"...\n")
@@ -42,16 +43,16 @@ if (length(match) > 0) {
 
 if (doQuery) {
   
-  cat("## Querying webpage...")
+  cat("## Querying webpage...\n")
   ti <- Sys.time()
   system(paste0('~/local_software/phantomjs/bin/phantomjs dumpHTML.js ', fullUrl))
-  cat("done. (in ", format(Sys.time() - ti),")\n", sep = "")
+  cat("...done. (in ", format(Sys.time() - ti),")\n", sep = "")
   
 }
 
 # Parse the page ----------------------------------------------------------
 
-cat("## Parsing webpage...")
+cat("## Parsing webpage...\n")
 ti <- Sys.time()
 # Get the price matrix
 flexTable <- readHTMLTable(pageFile, stringsAsFactors = F)$flexmatrixcontent
@@ -91,14 +92,14 @@ results <- xpathApply(page, xPath1, function(n) {
 })
 
 results <- do.call(rbind,results)
-cat("done. (in ", format(Sys.time() - ti),")\n", sep = "")
+cat("...done. (in ", format(Sys.time() - ti),")\n", sep = "")
 
 
 # Store Results -------------------------------------------------------------------
 
 if (doStore) {
   
-  cat("## Storing results...")
+  cat("## Storing results...\n")
   
   addTimeStamp <- function(df) {
     data.frame(df, created_at = as.character(Sys.time()))
@@ -117,9 +118,9 @@ if (doStore) {
     }
   },
   finally = dbDisconnect(con))
-  cat("done. (in ", format(Sys.time() - ti),")\n", sep = "")
+  cat("...done. (in ", format(Sys.time() - ti),")\n", sep = "")
   
 }
 
-cat("## Completed script in ", format(Sys.time() - t0),", exiting now. Thank you!\n", sep = "")
+cat("## Completed script in ", format(Sys.time() - t0),", exiting now. Thank you!\n\n*******************\n\n\n", sep = "")
 
