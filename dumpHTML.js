@@ -20,6 +20,7 @@ page.open(address, function(status) {
 
   if (status !== 'success') {
     console.log('FAIL to load the address');
+    phantom.exit();
   } else {
     t = Date.now() - t;
     console.log('Loading ' + system.args[1]);
