@@ -38,6 +38,6 @@ page.open(address, function(status) {
       console.log("rendering...");
       page.render('test.jpeg', {format: 'jpeg', quality: '100'});
       phantom.exit();
-        }, 40000); // Change timeout as required to allow sufficient time
+        }, 90000); // Change timeout as required to allow sufficient time
   }
 });
