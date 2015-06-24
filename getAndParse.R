@@ -15,11 +15,15 @@ dbname <- "kayakResults.sqlite"
 # URLs
 baseURL <- "http://www.kayak.com/flights"
 destinations <- "SFO-PAR"
-goDates <-"2015-05-29-flexible"
-returnDates <- "2015-06-24-flexible"
+
+goDates <- Sys.Date() + sample(3:150, 1)
+returnDates <- goDates + sample(c(3, 7, 10, 14, 18, 21, 25, 30), 1)
+
+goDatesString <- paste0(goDates, "-flexible")
+returnDatesString <- paste0(returnDates, "-flexible")
 
 # Build URL
-fullUrl <- paste(baseURL, destinations, goDates, returnDates, sep = "/")
+fullUrl <- paste(baseURL, destinations, goDatesString, returnDatesString, sep = "/")
 
 
 # Initialization ----------------------------------------------------------
