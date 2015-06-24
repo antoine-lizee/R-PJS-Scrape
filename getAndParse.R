@@ -3,6 +3,10 @@
 #
 # Copyright Antoine Lizee 2015/05 antoine.lizee@gmail.com 
 
+source("Logger.R")
+
+executWithErrorSignaling({
+
 # Parameters --------------------------------------------------------------
 
 doStore <- T
@@ -25,15 +29,12 @@ returnDatesString <- paste0(returnDates, "-flexible")
 # Build URL
 fullUrl <- paste(baseURL, destinations, goDatesString, returnDatesString, sep = "/")
 
-
 # Initialization ----------------------------------------------------------
 suppressMessages({
   library("XML")
   library("RSQLite")
   library("reshape2")
 })
-
-cat("# KAYAK scraping script run as", system("whoami", intern = T), "on", format(t0 <- Sys.time()) ,"...\n")
 
 # Get in the correct directory when launched from 'Rscript'
 cmdArgs <- commandArgs(trailingOnly = FALSE)
@@ -126,5 +127,4 @@ if (doStore) {
   
 }
 
-cat("## Completed script in ", format(Sys.time() - t0),", exiting now. Thank you!\n\n*******************\n\n\n", sep = "")
-
+})
